@@ -134,8 +134,11 @@ class PlayGame extends Phaser.Scene {
             player.setVelocityY(-330);
         }
 
-        if(cursors.space.isDown){
-            this.scene.restart()
+        if (cursors.space.isDown) {
+            if (life == 0) {
+                life = 5;
+                this.scene.restart()
+            }
         }
     }
 
@@ -188,7 +191,8 @@ function hitRock(player, rock) {
         player.anims.play('turn');
 
 
-        this.add.text(100, 150, "GAME OVER, \n NOOOOB", { fontSize: '30px', fill: 'white', backgroundColor: "black" })
+        this.add.text(300, 100, "GAME OVER", { fontSize: '30px', fill: 'white', backgroundColor: "black" })
+        this.add.text(100, 150, "TECLE ESPAÇO PARA JOGAR NOVAMENTE", { fontSize: '30px', fill: 'white', backgroundColor: "black" })
     }
 
 }
@@ -205,7 +209,8 @@ function hitBomb(player, bomb) {
 
         player.anims.play('turn');
 
-        this.add.text(200, 150, "GAME OVER, você é newbie demais pro game", { fontSize: '30px', fill: 'white', backgroundColor: "black" })
+        this.add.text(200, 100, "GAME OVER", { fontSize: '30px', fill: 'white', backgroundColor: "black" })
+        this.add.text(100, 150, "TECLE ESPAÇO PARA JOGAR NOVAMENTE", { fontSize: '30px', fill: 'white', backgroundColor: "black" })
 
     }
 }

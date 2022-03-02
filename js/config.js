@@ -18,7 +18,7 @@ window.onload = function() {
                 debug: false
             }
         },
-        scene: [PlayGame]
+        scene: [HomeGame, PlayGame]
     }
 
     game = new Phaser.Game(gameConfig)
