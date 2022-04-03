@@ -8,6 +8,7 @@ var lifeText
 var life = 2;
 var bombs;
 var rocks;
+var audioJump;
 
 class PlayGame extends Phaser.Scene {
     constructor() {
@@ -24,6 +25,7 @@ class PlayGame extends Phaser.Scene {
         this.load.image('wood', './assets/chao.png')
         this.load.image('bomb', './assets/bomb.png')
         this.load.image('rock', './assets/rocha.png')
+        this.load.audio('jump', './assets/jump.wav')
     }
 
     create() {
@@ -102,7 +104,7 @@ class PlayGame extends Phaser.Scene {
         scoreText = this.add.text(16, 16, 'Score: ' + score, { fontSize: '32px', fill: '#FFF', backgroundColor: 'black' });
         lifeText = this.add.text(16, 50, 'Vida: ' + life, { fontSize: '32px', fill: '#FFF', backgroundColor: 'black' });
 
-        // COLISÕES-+
+        // COLISÕES
         this.physics.add.collider(player, platforms)
         this.physics.add.collider(stars, platforms)
         this.physics.add.overlap(player, stars, this.collectStar, null, this)
@@ -110,6 +112,8 @@ class PlayGame extends Phaser.Scene {
         this.physics.add.collider(player, bombs, hitBomb, null, this)
         this.physics.add.overlap(player, rocks, hitRock, null, this)
 
+        //AUDIOS
+        audioJump = this.sound.add("jump")
 
     }
 
@@ -132,6 +136,7 @@ class PlayGame extends Phaser.Scene {
 
         if (cursors.up.isDown && player.body.touching.down) {
             player.setVelocityY(-330);
+            audioJump.play()
         }
 
         if (cursors.space.isDown) {
@@ -190,9 +195,10 @@ function hitRock(player, rock) {
 
         player.anims.play('turn');
 
+        this.scene.start("EndGame")
 
-        this.add.text(300, 100, "GAME OVER", { fontSize: '30px', fill: 'white', backgroundColor: "black" })
-        this.add.text(100, 150, "TECLE ESPAÇO PARA JOGAR NOVAMENTE", { fontSize: '30px', fill: 'white', backgroundColor: "black" })
+        // this.add.text(300, 100, "GAME OVER", { fontSize: '30px', fill: 'white', backgroundColor: "black" })
+        // this.add.text(100, 150, "TECLE ESPAÇO PARA JOGAR NOVAMENTE", { fontSize: '30px', fill: 'white', backgroundColor: "black" })
     }
 
 }
