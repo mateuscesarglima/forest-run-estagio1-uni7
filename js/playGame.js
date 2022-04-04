@@ -29,10 +29,12 @@ class PlayGame extends Phaser.Scene {
     this.load.image("bomb", "./assets/bomb.png");
     this.load.image("rock", "./assets/rocha.png");
     this.load.audio("jump", "./assets/jump.wav");
- 
   }
 
   create() {
+    //FADEIN
+    this.cameras.main.fadeIn(1000, 0, 0, 0);
+
     //Backgroud image
     this.add.image(0, 0, "florest").setOrigin(0, 0);
 
@@ -204,7 +206,14 @@ function hitRock(player, rock) {
 
     player.anims.play("turn");
 
-    this.scene.start("EndGame");
+    this.cameras.main.fadeOut(500, 0, 0, 0);
+
+    this.cameras.main.once(
+      Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,
+      () => {
+        this.scene.start("EndGame");
+      }
+    );
   }
 }
 
@@ -218,5 +227,14 @@ function hitBomb(player, bomb) {
     player.setTint(0xff0000);
 
     player.anims.play("turn");
+
+    this.cameras.main.fadeOut(500, 0, 0, 0);
+
+    this.cameras.main.once(
+      Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,
+      () => {
+        this.scene.start("EndGame");
+      }
+    );
   }
 }

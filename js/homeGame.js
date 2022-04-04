@@ -27,8 +27,8 @@ class HomeGame extends Phaser.Scene {
     infoImg = this.add.image(750, 550, "info");
     infoImg.setInteractive({ cursor: "pointer" });
     infoImg.on("pointerdown", () => {
-      this.start.scene("Info")
-      this.sound.play("click")
+      this.start.scene("Info");
+      this.sound.play("click");
     })
     // Placa de madeira
     this.add.image(400, 200, "placa");
@@ -45,10 +45,14 @@ class HomeGame extends Phaser.Scene {
     btnPlay.setInteractive({ cursor: "pointer" });
     // Ao clicar o botão play irá levar ao jogo
     btnPlay.on("pointerdown", () => {
-      this.scene.start("PlayGame");
+      this.cameras.main.fadeOut(500,0,0,0)
       audioClick.play();
       audioHome.pause();
     });
+
+    this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+      this.scene.start("PlayGame");
+    })
 
     btnOptions = this.add.image(400, 500, "btnOptions");
 
