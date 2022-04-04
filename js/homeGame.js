@@ -2,7 +2,7 @@ let btnPlay;
 let btnOptions;
 let audioHome;
 let audioClick;
-
+let infoImg;
 class HomeGame extends Phaser.Scene {
   constructor() {
     super("HomeGame");
@@ -16,12 +16,20 @@ class HomeGame extends Phaser.Scene {
     this.load.image("instrucoes", "./assets/instrucoes.png");
     this.load.audio("audioHome", "./assets/floresta.mp3");
     this.load.audio("click", "./assets/click.wav");
+    this.load.image("info", "./assets/info.png");
   }
 
   create() {
     //Background image
     this.add.image(0, 0, "background").setOrigin(0, 0);
 
+    //info img
+    infoImg = this.add.image(750, 550, "info");
+    infoImg.setInteractive({ cursor: "pointer" });
+    infoImg.on("pointerdown", () => {
+      this.start.scene("Info")
+      this.sound.play("click")
+    })
     // Placa de madeira
     this.add.image(400, 200, "placa");
 
@@ -34,7 +42,7 @@ class HomeGame extends Phaser.Scene {
     //Botão de play
     btnPlay = this.add.image(400, 400, "btnPlay");
     // Instanciando a interação com o botão play
-    btnPlay.setInteractive({cursor: "pointer"});
+    btnPlay.setInteractive({ cursor: "pointer" });
     // Ao clicar o botão play irá levar ao jogo
     btnPlay.on("pointerdown", () => {
       this.scene.start("PlayGame");
@@ -42,19 +50,13 @@ class HomeGame extends Phaser.Scene {
       audioHome.pause();
     });
 
-    // btnPlay.on("pointerdown", () => audioClick.play());
-    // btnPlay.on("pointerdown", () => audioHome.pause());
-
     btnOptions = this.add.image(400, 500, "btnOptions");
 
     btnOptions.setInteractive({ cursor: "pointer" });
     btnOptions.on("pointerdown", () => {
       this.scene.start("Options");
-      audioClick.play().repeat();
+      audioClick.play();
       audioHome.pause();
     });
-
-    // btnOptions.on("pointerdown", () => audioClick.play())
-    // btnOptions.on("pointerdown", () => audioHome.pause())
   }
 }
